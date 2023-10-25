@@ -1,40 +1,27 @@
 #!/usr/bin/env python3
-"""BaseCaching module.
 """
-from base_caching import BaseCaching
+Basic ditionary
+"""
+
+
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class BasicCache(BaseCaching):
     """
-    Defines a class for caching information in key-value pairs
-    Methods:
-        put(key, item) - store a key-value pair
-        get(key) - retrieve the value associated with a key
+    Basic Cache class that inherits from BaseCaching
     """
-
-    def __init__(self):
-        """
-        Initialize the class using the parent class __init__ method.
-        """
-        BaseCaching.__init__(self)
 
     def put(self, key, item):
         """
-        Store a key-value pair
-        Args:
-            key
-            Item
+        Must assign to the dictionary self.cache_data
+        the item value for the key key.
         """
-        if key is None or item is None:
-            pass
-        else:
+        if key and item:
             self.cache_data[key] = item
 
     def get(self, key):
         """
-        Return value linked to key
-        If key is None or doesn't exist, return None
+        Must return the value in self.cache_data linked to key.
         """
-        if key is not None and key in self.cache_data.keys():
-            return self.cached_data[key]
-        return None
+        return self.cache_data.get(key, None)
