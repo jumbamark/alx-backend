@@ -1,40 +1,45 @@
 #!/usr/bin/env python3
-"""BaseCaching module
 """
-from base_caching import BaseCaching
+FIFO Caching
+"""
+
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class FIFOCache(BaseCaching):
     """
-    FIFOCache defines a FIFO caching system
+    a class FIFOCache that inherits from BaseCaching and is a caching system
     """
 
     def __init__(self):
         """
-        Initializes the class with the parent's init method
+        Init method
         """
         super().__init__()
-        self.order = []
+        self.key_indexes = []
 
     def put(self, key, item):
         """
-        Cache a key-value pair
+        assign to the dictionary self.cache_data
+        the item value for the key key.
         """
-        if key is None or item is NOne:
-            pass
-        else:
-            length = len(self.cache_data)
-            if length >= BaseCaching.MAX_ITEMS and key not in self.cache_data:
-                print("DISCARD: {}".format(self.order[0]))
-                del self.cache_data[self.order[0]]
-                del self.order[0]
-            self.order.append(key)
-            self.cache_data[key] = item
+        if key and item:
+            if key in self.cache_data:
+                self.cache_data[key] = item
+                return
 
-        def get(self, key):
-            """
-            Return the value linked to a given key, or None
-            """
-            if key is not None and key in self.cache_data.keys():
-                return self.cache_data[key]
-            return None
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                item_discarded = self.key_indexes.pop(0)
+                del self.cache_data[item_discarded]
+                print("DISCARD:", item_discarded)
+
+            self.cache_data[key] = item
+            self.key_indexes.append(key)
+
+    def get(self, key):
+        """
+        return the value in self.cache_data linked to key.
+        """
+        if key in self.cache_data:
+            return self.cache_data[key]
+        return None
